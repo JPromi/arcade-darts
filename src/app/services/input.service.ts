@@ -20,4 +20,8 @@ export class InputService {
   undoPoint(): Observable<boolean> {
     return this.httpClient.post<boolean>(`${this.url}/api/game/real/darts/play?type=undo`, null, { withCredentials: true });
   }
+
+  cancleGame(): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${this.url}/api/game/real/darts/play?type=cancel`, null, { withCredentials: true });
+  }
 }

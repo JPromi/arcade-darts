@@ -137,4 +137,12 @@ export class InputComponent implements OnInit {
     });
   }
 
+  cancleGame() {
+    this.inputService.cancleGame().subscribe(
+      (response: any) => {
+        this.router.navigate(['/']);
+      }
+    );
+  }
+
 }
