@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
-import { UserList } from '../../dtos/settings';
+import { GameSettings, UserList } from '../../dtos/settings';
 import { DartsService } from '../../services/darts.service';
 import { Router } from '@angular/router';
 
@@ -17,8 +17,7 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   userList: UserList[] = [];
-
-  selectedUserIds: number[] = [];
+  gameSettings: GameSettings = new GameSettings();
 
   ngOnInit() {
     this.checkIfCurrentGame();
@@ -48,11 +47,11 @@ export class SettingsComponent implements OnInit {
 
   toggleUser(userId: number) {
 
-    if (this.selectedUserIds.includes(userId)) {
-      this.selectedUserIds = this.selectedUserIds.filter(id => id !== userId);
+    if (this.gameSettings.players.includes(userId)) {
+      this.gameSettings.players = this.gameSettings.players.filter(id => id !== userId);
     } else {
-      if(this.selectedUserIds.length < 6) {
-        this.selectedUserIds.push(userId);
+      if(this.gameSettings.players.length < 6) {
+        this.gameSettings.players.push(userId);
       } else {
         console.log('Max 6 players allowed');
       }
@@ -61,7 +60,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getUserNumber(userId: number): string {
-    var index = this.selectedUserIds.indexOf(userId);
+    var index = this.gameSettings.players.indexOf(userId);
     if(index >= 0) {
       return (index + 1).toString();
     } else {
@@ -70,6 +69,21 @@ export class SettingsComponent implements OnInit {
   }
 
   randomizePlayerList() {
-    this.selectedUserIds = this.selectedUserIds.sort(() => Math.random() - 0.5);
+    this.gameSettings.players = this.gameSettings.players.sort(() => Math.random() - 0.5);
+  }
+
+  newGame() {
+    if(this.gameSettings.players.length > 1 && this.gameSettings.players.length < 7) {
+      this.settingsService.newGame(this.gameSettings).subscribe(
+        (data) => {
+          if(data) {
+            this.router.navigate(['/game']);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

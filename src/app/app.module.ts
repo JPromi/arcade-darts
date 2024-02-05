@@ -9,6 +9,7 @@ import { InputComponent } from './components/input/input.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync('noop')

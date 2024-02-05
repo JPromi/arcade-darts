@@ -12,11 +12,11 @@
             <h3>Spielemodus</h3>
             <div class="buttons">
                 <label>
-                    <input type="radio" name="mode" value="301" checked>
+                    <input type="radio" name="mode" value="301" [(ngModel)]="gameSettings.mode">
                     <p>301</p>
                 </label>
                 <label>
-                    <input type="radio" name="mode" value="501">
+                    <input type="radio" name="mode" value="501" [(ngModel)]="gameSettings.mode">
                     <p>501</p>
                 </label>
     
@@ -27,11 +27,11 @@
             <h3>Checkout</h3>
             <div class="buttons">
                 <label>
-                    <input type="radio" name="checkout" value="straight">
+                    <input type="radio" name="checkout" value="straight" [(ngModel)]="gameSettings.checkout">
                     <p>Straight Out</p>
                 </label>
                 <label>
-                    <input type="radio" name="checkout" value="double" checked>
+                    <input type="radio" name="checkout" value="double" [(ngModel)]="gameSettings.checkout">
                     <p>Double Out</p>
                 </label>
             </div>
@@ -52,7 +52,7 @@
                         <input type="checkbox" [name]="'playerSelect' + user.userId.toString()">
                         <p> {{ user.username }} </p>
                     </label> -->
-                    <button [ngClass]="{'active': selectedUserIds.includes(user.userId)}" (click)="toggleUser(user.userId)">
+                    <button [ngClass]="{'active': gameSettings.players.includes(user.userId)}" (click)="toggleUser(user.userId)">
                         <p class="name"> {{ user.username }} </p>
                         <p class="number"> {{ getUserNumber(user.userId) }} </p>
                     </button>
@@ -70,6 +70,6 @@
     </div>
     
     <div class="btn">
-        <button>Start</button>
+        <button (click)="newGame()">Start</button>
     </div>
 </div>
