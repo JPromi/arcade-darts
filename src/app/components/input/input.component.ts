@@ -1,4 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { DartsService } from '../../services/darts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-input',
@@ -7,7 +9,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class InputComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dartsService: DartsService,
+    public router: Router
+  ) { }
 
   inputType: string = 'numbers';
   multiplier: string = '';
@@ -15,6 +20,17 @@ export class InputComponent implements OnInit {
   inputInterval: any;
 
   ngOnInit() {
+    this.checkIfCurrentGame();
+  }
+
+  checkIfCurrentGame() {
+    this.dartsService.isCurrentGame().subscribe(
+      (isCurrentGame: boolean) => {
+        if(!isCurrentGame) {
+          this.router.navigate(['/']);
+        }
+      }
+    );
   }
 
   setPoints(points: string) {

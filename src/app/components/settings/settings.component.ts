@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { UserList } from '../../dtos/settings';
+import { DartsService } from '../../services/darts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +11,9 @@ import { UserList } from '../../dtos/settings';
 })
 export class SettingsComponent implements OnInit {
   constructor(
-    public settingsService: SettingsService
+    public settingsService: SettingsService,
+    public dartsService: DartsService,
+    public router: Router
   ) { }
 
   userList: UserList[] = [];
@@ -17,7 +21,18 @@ export class SettingsComponent implements OnInit {
   selectedUserIds: number[] = [];
 
   ngOnInit() {
+    this.checkIfCurrentGame();
     this.getAllUsers();
+  }
+
+  checkIfCurrentGame() {
+    this.dartsService.isCurrentGame().subscribe(
+      (isCurrentGame: boolean) => {
+        if(isCurrentGame) {
+          this.router.navigate(['/game']);
+        }
+      }
+    );
   }
 
   getAllUsers() {
