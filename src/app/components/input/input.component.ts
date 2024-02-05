@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { DartsService } from '../../services/darts.service';
 import { Router } from '@angular/router';
+import { InputService } from '../../services/input.service';
 
 @Component({
   selector: 'app-input',
@@ -11,7 +12,8 @@ export class InputComponent implements OnInit {
 
   constructor(
     public dartsService: DartsService,
-    public router: Router
+    public router: Router,
+    public inputService: InputService
   ) { }
 
   inputType: string = 'numbers';
@@ -34,10 +36,14 @@ export class InputComponent implements OnInit {
   }
 
   setPoints(points: string) {
-    console.log(this.multiplier + points);
+    this.inputService.addPoint(this.multiplier + points).subscribe();
 
     //reset multiplier
     this.multiplier = '';
+  }
+
+  undo() {
+    this.inputService.undoPoint().subscribe();
   }
 
   // key

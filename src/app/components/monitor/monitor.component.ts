@@ -80,14 +80,4 @@ export class MonitorComponent implements OnInit {
     });
   }
 
-  getMaxPoints(): number {
-    if(this.gameInformation.mode == '301') {
-      return 301;
-    } else if(this.gameInformation.mode == '501') {
-      return 501;
-    } else {
-      return 0;
-    }
-  }
-
 }
