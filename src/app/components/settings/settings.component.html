@@ -39,7 +39,11 @@
     
         <div class="setting">
             <h3>Spieler Auswahl</h3>
-            <button (click)="randomizePlayerList()">Randomize</button>
+            <div class="btns">
+                <button (click)="randomizePlayerList()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
             <p class="info">Es müssen Mindestens 2 und Maximal 6 Spieler Ausgewählt werden</p>
             <div class="list">
     
