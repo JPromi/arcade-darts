@@ -1,14 +1,84 @@
 <div class="header">
     <div>
         <h1>Darts</h1>
-        <!-- <p> {{ gameInformation.mode }} </p> -->
-        <p>501</p>
+        <p> {{ gameInformation.mode }} </p>
     </div>
 </div>
 
 <div class="display">
 
     <div class="list">
+        <div class="current">
+            <div class="top">
+                <div class="player">
+                    <h2> {{ playerList.current.name }} </h2>
+                    <p> {{ playerList.current.number }} </p>
+                </div>
+                <div class="score">
+                    <h1> {{ playerList.current.score }} </h1>
+                </div>
+            </div>
+
+            <div class="throws">
+                <div class="throw">
+                    <h1>1</h1>
+                    <p *ngIf="playerList.current.throws.throw1"> {{ playerList.current.throws.throw1 }} </p>
+                </div>
+                <div class="throw">
+                    <h1>2</h1>
+                    <p *ngIf="playerList.current.throws.throw2"> {{ playerList.current.throws.throw2 }} </p>
+                </div>
+                <div class="throw">
+                    <h1>3</h1>
+                    <p *ngIf="playerList.current.throws.throw3"> {{ playerList.current.throws.throw3}} </p>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <span>
+                    <h1>Hint</h1>
+                    <p>
+                        <ng-container *ngIf="!playerList.current.throwsHint.hint1"> No Hint </ng-container>
+                        <ng-container *ngIf="playerList.current.throwsHint.hint1"> {{ playerList.current.throwsHint.hint1 }} </ng-container>
+                        <ng-container *ngIf="playerList.current.throwsHint.hint2"> | </ng-container>
+                        <ng-container *ngIf="playerList.current.throwsHint.hint2"> {{ playerList.current.throwsHint.hint2 }} </ng-container>
+                        <ng-container *ngIf="playerList.current.throwsHint.hint3"> | </ng-container>
+                        <ng-container *ngIf="playerList.current.throwsHint.hint3"> {{ playerList.current.throwsHint.hint3 }} </ng-container>
+                    </p>
+                </span>
+            </div>
+        </div>
+
+        <div class="other">
+            <div class="player">
+                <div class="top">
+                    <div class="user">
+                        <h2> {{ playerList.next.name }} </h2>
+                        <p> {{ playerList.next.number }} </p>
+                    </div>
+
+                    <h1 class="status">Nächster</h1>
+
+                    <div class="score">
+                        <h1> {{ playerList.next.score }} </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="player previous">
+                <div class="top">
+                    <div class="user">
+                        <h2> {{ playerList.previous.name }} </h2>
+                        <p> {{ playerList.previous.number }} </p>
+                    </div>
+
+                    <h1 class="status">Vorheriger</h1>
+
+                    <div class="score">
+                        <h1> {{ playerList.previous.score }} </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="input">

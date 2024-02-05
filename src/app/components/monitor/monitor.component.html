@@ -29,15 +29,18 @@
         <div class="throws">
             <div class="throw">
                 <h1>1</h1>
-                <p *ngIf="currentPlayer.throws.throw1"> {{ currentPlayer.throws.throw1 }} </p>
+                <p *ngIf="currentPlayer.throws.throw1 != 'abort'"> {{ currentPlayer.throws.throw1 }} </p>
+                <span *ngIf="currentPlayer.throws.throw1 == 'abort'"></span>
             </div>
             <div class="throw">
                 <h1>2</h1>
-                <p *ngIf="currentPlayer.throws.throw2"> {{ currentPlayer.throws.throw2 }} </p>
+                <p *ngIf="currentPlayer.throws.throw2 != 'abort'"> {{ currentPlayer.throws.throw2 }} </p>
+                <span *ngIf="currentPlayer.throws.throw2 == 'abort'"></span>
             </div>
             <div class="throw">
                 <h1>3</h1>
-                <p *ngIf="currentPlayer.throws.throw3"> {{ currentPlayer.throws.throw3}} </p>
+                <p *ngIf="currentPlayer.throws.throw3 != 'abort'"> {{ currentPlayer.throws.throw3}} </p>
+                <span *ngIf="currentPlayer.throws.throw3 == 'abort'"></span>
             </div>
         </div>
 
@@ -87,15 +90,18 @@
                     <div class="s-throws">
                         <div class="throw">
                             <h1>1</h1>
-                            <p *ngIf="player.throws.throw1"> {{ player.throws.throw1 }} </p>
+                            <p *ngIf="player.throws.throw1 != 'abort'"> {{ player.throws.throw1 }} </p>
+                            <span *ngIf="player.throws.throw1 == 'abort'" class="line">asd</span>
                         </div>
                         <div class="throw">
                             <h1>2</h1>
-                            <p *ngIf="player.throws.throw2"> {{ player.throws.throw2 }} </p>
+                            <p *ngIf="player.throws.throw2 != 'abort'"> {{ player.throws.throw2 }} </p>
+                            <span *ngIf="player.throws.throw2 == 'abort'" class="line"></span>
                         </div>
                         <div class="throw">
                             <h1>3</h1>
-                            <p *ngIf="player.throws.throw3"> {{ player.throws.throw3 }} </p>
+                            <p *ngIf="player.throws.throw3 != 'abort'"> {{ player.throws.throw3 }} </p>
+                            <span *ngIf="player.throws.throw3 == 'abort'" class="line"></span>
                         </div>
                     </div>
 

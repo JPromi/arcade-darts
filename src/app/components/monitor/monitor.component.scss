@@ -142,6 +142,14 @@
                     font-size: 2.5rem;
                     position: absolute;
                 }
+
+                span {
+                    width: 2rem;
+                    height: 2px;
+                    background-color: #ffffff;
+                    display: flex;
+                    position: absolute;
+                }
             }
         }
 
@@ -274,6 +282,14 @@
                             font-size: 2rem;
                             position: absolute;
                         }
+
+                        span {
+                            width: 2rem;
+                            height: 2px;
+                            background-color: #ffffff;
+                            display: flex;
+                            position: absolute;
+                        }
                     }
                 }
 
@@ -324,21 +340,6 @@
 
         }
     }
-}
-
-@keyframes lineFlicker {
-    0% {
-        width: 50px;
-    }
-
-    50% {
-        width: 1500px;
-    }
-
-    100% {
-        width: 50px;
-    }
-    
 }
 
 @media screen and (max-width: 1500px){

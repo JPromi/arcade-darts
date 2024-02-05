@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { DartsService } from '../../services/darts.service';
 import { Router } from '@angular/router';
 import { InputService } from '../../services/input.service';
+import { GameInformation, Player } from '../../dtos/play';
+import { MonitorService } from '../../services/monitor.service';
 
 @Component({
   selector: 'app-input',
@@ -13,16 +15,33 @@ export class InputComponent implements OnInit {
   constructor(
     public dartsService: DartsService,
     public router: Router,
-    public inputService: InputService
+    public inputService: InputService,
+    public monitorService: MonitorService
   ) { }
 
   inputType: string = 'numbers';
   multiplier: string = '';
   keyInput: string = '';
   inputInterval: any;
+  gameInformation: GameInformation = new GameInformation();
+
+  players: Player[] = [];
+  playerList = {
+    current: new Player(),
+    next: new Player(),
+    previous: new Player()
+  }
 
   ngOnInit() {
     this.checkIfCurrentGame();
+
+    //load list
+    this.getGameSettings();
+    this.getPlayers();
+
+    setInterval(() => {
+      this.getPlayers();
+    }, 15000);
   }
 
   checkIfCurrentGame() {
@@ -35,15 +54,31 @@ export class InputComponent implements OnInit {
     );
   }
 
+  getGameSettings() {
+    this.monitorService.getGameInformation().subscribe(
+      (game: GameInformation) => {
+        this.gameInformation = game;
+      }
+    );
+  }
+
   setPoints(points: string) {
-    this.inputService.addPoint(this.multiplier + points).subscribe();
+    this.inputService.addPoint(this.multiplier + points).subscribe(
+      (response: any) => {
+        this.getPlayers();
+      }
+    );
 
     //reset multiplier
     this.multiplier = '';
   }
 
   undo() {
-    this.inputService.undoPoint().subscribe();
+    this.inputService.undoPoint().subscribe(
+      (response: any) => {
+        this.getPlayers();
+      }
+    );
   }
 
   // key
@@ -82,5 +117,24 @@ export class InputComponent implements OnInit {
     }
   }
 
+  getPlayers() {
+    this.monitorService.getPlayers().subscribe(
+      (players: Player[]) => {
+        this.players = players;
+        this.setPlayerList();
+        this.checkIfCurrentGame();
+      }
+    );
+  }
+
+  setPlayerList() {
+    this.players.forEach((player, index) => {
+      if(player.current) {
+        this.playerList.current = player;
+        this.playerList.next = this.players[index + 1] ? this.players[index + 1] : this.players[0];
+        this.playerList.previous = this.players[index - 1] ? this.players[index - 1] : this.players[this.players.length - 1];
+      }
+    });
+  }
 
 }
