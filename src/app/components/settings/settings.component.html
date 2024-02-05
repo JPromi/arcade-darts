@@ -1,0 +1,71 @@
+<div class="header">
+    <div>
+        <h1>Darts</h1>
+        <p>Einstellungen</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="settings">
+
+        <div class="setting">
+            <h3>Spielemodus</h3>
+            <div class="buttons">
+                <label>
+                    <input type="radio" name="mode" value="301" checked>
+                    <p>301</p>
+                </label>
+                <label>
+                    <input type="radio" name="mode" value="501">
+                    <p>501</p>
+                </label>
+    
+            </div>
+        </div>
+    
+        <div class="setting">
+            <h3>Checkout</h3>
+            <div class="buttons">
+                <label>
+                    <input type="radio" name="checkout" value="straight">
+                    <p>Straight Out</p>
+                </label>
+                <label>
+                    <input type="radio" name="checkout" value="double" checked>
+                    <p>Double Out</p>
+                </label>
+            </div>
+        </div>
+    
+        <div class="setting">
+            <h3>Spieler Auswahl</h3>
+            <button (click)="randomizePlayerList()">Randomize</button>
+            <p class="info">Es müssen Mindestens 2 und Maximal 6 Spieler Ausgewählt werden</p>
+            <div class="list">
+    
+                <ng-container *ngFor="let user of userList">
+                    <!-- <label>
+                        <input type="checkbox" [name]="'playerSelect' + user.userId.toString()">
+                        <p> {{ user.username }} </p>
+                    </label> -->
+                    <button [ngClass]="{'active': selectedUserIds.includes(user.userId)}" (click)="toggleUser(user.userId)">
+                        <p class="name"> {{ user.username }} </p>
+                        <p class="number"> {{ getUserNumber(user.userId) }} </p>
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+    
+        <div class="setting">
+            <h3>Services</h3>
+            <div class="buttons">
+                <button routerLink="monitor">Dashboard</button>
+            </div>
+        </div>
+    
+    </div>
+    
+    <div class="btn">
+        <button>Start</button>
+    </div>
+</div>

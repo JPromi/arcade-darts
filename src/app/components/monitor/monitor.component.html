@@ -1,0 +1,127 @@
+<div class="header">
+    <div>
+        <h1>Darts</h1>
+        <p> {{ gameInformation.mode }} </p>
+    </div>
+    <div>
+        <!-- <p>12:15</p> -->
+        <p> {{ clock }} </p>
+    </div>
+</div>
+
+<div class="game" *ngIf="loaded">
+    <div class="current">
+        <div class="top">
+            <div class="player">
+                <div class="img">
+                    <img [src]="currentPlayer.profilePicture" class="blur">
+                    <img [src]="currentPlayer.profilePicture">
+                </div>
+                <h2> {{ currentPlayer.name }} </h2>
+                <p> {{ currentPlayer.number }} </p>
+            </div>
+
+            <div class="score">
+                <h1> {{ getMaxPoints() - currentPlayer.score }} </h1>
+            </div>
+        </div>
+
+        <div class="throws">
+            <div class="throw">
+                <h1>1</h1>
+                <p *ngIf="currentPlayer.throws.throw1"> {{ currentPlayer.throws.throw1 }} </p>
+            </div>
+            <div class="throw">
+                <h1>2</h1>
+                <p *ngIf="currentPlayer.throws.throw2"> {{ currentPlayer.throws.throw2 }} </p>
+            </div>
+            <div class="throw">
+                <h1>3</h1>
+                <p *ngIf="currentPlayer.throws.throw3"> {{ currentPlayer.throws.throw3}} </p>
+            </div>
+        </div>
+
+        <div class="informations">
+            <span>
+                <h1>Checkout</h1>
+                <p> {{ currentPlayer.checkout }} </p>
+            </span>
+            <span>
+                <h1>Highscore</h1>
+                <p> {{ currentPlayer.highscore }} </p>
+            </span>
+            <span>
+                <h1>Average</h1>
+                <p> {{ currentPlayer.average }} </p>
+            </span>
+            <span>
+                <h1>Hint</h1>
+                <p>
+                    <ng-container *ngIf="!currentPlayer.throwsHint.hint1"> No Hint </ng-container>
+                    <ng-container *ngIf="currentPlayer.throwsHint.hint1"> {{ currentPlayer.throwsHint.hint1 }} </ng-container>
+                    <ng-container *ngIf="currentPlayer.throwsHint.hint2"> | </ng-container>
+                    <ng-container *ngIf="currentPlayer.throwsHint.hint2"> {{ currentPlayer.throwsHint.hint2 }} </ng-container>
+                    <ng-container *ngIf="currentPlayer.throwsHint.hint3"> | </ng-container>
+                    <ng-container *ngIf="currentPlayer.throwsHint.hint3"> {{ currentPlayer.throwsHint.hint3 }} </ng-container>
+                </p>
+            </span>
+        </div>
+    </div>
+
+    <div class="list">
+
+        <ng-container *ngFor="let player of players">
+
+            <div class="player" [ngClass]="{'player': true, 'current': currentPlayer == player}">
+
+                <div class="top">
+                    <div class="profile">
+                        <div class="img">
+                            <img [src]="player.profilePicture" class="blur">
+                            <img [src]="player.profilePicture">
+                        </div>
+                        <h2> {{ player.name }} </h2>
+                        <p> {{ player.number }} </p>
+                    </div>
+
+                    <div class="s-throws">
+                        <div class="throw">
+                            <h1>1</h1>
+                            <p *ngIf="player.throws.throw1"> {{ player.throws.throw1 }} </p>
+                        </div>
+                        <div class="throw">
+                            <h1>2</h1>
+                            <p *ngIf="player.throws.throw2"> {{ player.throws.throw2 }} </p>
+                        </div>
+                        <div class="throw">
+                            <h1>3</h1>
+                            <p *ngIf="player.throws.throw3"> {{ player.throws.throw3 }} </p>
+                        </div>
+                    </div>
+
+                    <div class="score">
+                        <h1> {{  getMaxPoints() - player.score }} </h1>
+                    </div>
+                </div>
+
+                <div class="informations">
+                    <span>
+                        <h1>Checkout</h1>
+                        <p> {{ player.checkout }} </p>
+                    </span>
+                    <span>
+                        <h1>Highscore</h1>
+                        <p> {{ player.highscore }} </p>
+                    </span>
+                    <span>
+                        <h1>Average</h1>
+                        <p> {{ player.average }} </p>
+                    </span>
+                </div>
+
+            </div>
+
+        </ng-container>
+
+    </div>
+</div>
