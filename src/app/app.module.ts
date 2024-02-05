@@ -7,6 +7,8 @@ import { MonitorComponent } from './components/monitor/monitor.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { InputComponent } from './components/input/input.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,12 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync('noop')
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
