@@ -80,4 +80,12 @@ export class MonitorComponent implements OnInit {
     });
   }
 
+  fullscreen() {
+    if(document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  }
+
 }
