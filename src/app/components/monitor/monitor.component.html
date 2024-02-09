@@ -46,16 +46,8 @@
 
         <div class="informations">
             <span>
-                <h1>Checkout</h1>
-                <p> {{ currentPlayer.checkout }} </p>
-            </span>
-            <span>
                 <h1>Highscore</h1>
                 <p> {{ currentPlayer.highscore }} </p>
-            </span>
-            <span>
-                <h1>Average</h1>
-                <p> {{ currentPlayer.average }} </p>
             </span>
             <span>
                 <h1>Hint</h1>
@@ -112,16 +104,19 @@
 
                 <div class="informations">
                     <span>
-                        <h1>Checkout</h1>
-                        <p> {{ player.checkout }} </p>
-                    </span>
-                    <span>
                         <h1>Highscore</h1>
                         <p> {{ player.highscore }} </p>
                     </span>
                     <span>
-                        <h1>Average</h1>
-                        <p> {{ player.average }} </p>
+                        <h1>Hint</h1>
+                        <p>
+                            <ng-container *ngIf="!player.throwsHint.hint1"> No Hint </ng-container>
+                            <ng-container *ngIf="player.throwsHint.hint1"> {{ player.throwsHint.hint1 }} </ng-container>
+                            <ng-container *ngIf="player.throwsHint.hint2"> | </ng-container>
+                            <ng-container *ngIf="player.throwsHint.hint2"> {{ player.throwsHint.hint2 }} </ng-container>
+                            <ng-container *ngIf="player.throwsHint.hint3"> | </ng-container>
+                            <ng-container *ngIf="player.throwsHint.hint3"> {{ player.throwsHint.hint3 }} </ng-container>
+                        </p>
                     </span>
                 </div>
 
