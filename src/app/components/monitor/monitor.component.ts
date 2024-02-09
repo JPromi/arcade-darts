@@ -66,17 +66,20 @@ export class MonitorComponent implements OnInit {
   getPlayerInformation() {
     this.monitorService.getPlayers().subscribe(players => {
 
-      players.forEach(
-        player => {
-
-          if(player.current) {
-            this.currentPlayer = player;
+      if(this.players != players) {
+        players.forEach(
+          player => {
+  
+            if(player.current) {
+              this.currentPlayer = player;
+            }
+  
           }
+        );
+  
+        this.players = players;
 
-        }
-      );
-
-      this.players = players;
+      }
     });
   }
 

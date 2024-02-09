@@ -120,9 +120,11 @@ export class InputComponent implements OnInit {
   getPlayers() {
     this.monitorService.getPlayers().subscribe(
       (players: Player[]) => {
-        this.players = players;
-        this.setPlayerList();
-        this.checkIfCurrentGame();
+        if(this.players != players) {
+          this.players = players;
+          this.setPlayerList();
+          this.checkIfCurrentGame();
+        }
       }
     );
   }
