@@ -7,34 +7,46 @@
 
 <div class="display">
 
-    <div class="list">
+    <div class="list-game">
         <div class="current">
             <div class="top">
                 <div class="player">
+                    <div class="img">
+                        <img [src]="playerList.current.profilePicture" class="blur">
+                        <img [src]="playerList.current.profilePicture">
+                    </div>
                     <h2> {{ playerList.current.name }} </h2>
                     <p> {{ playerList.current.number }} </p>
                 </div>
+    
                 <div class="score">
                     <h1> {{ playerList.current.score }} </h1>
                 </div>
             </div>
-
+    
             <div class="throws">
                 <div class="throw">
                     <h1>1</h1>
-                    <p *ngIf="playerList.current.throws.throw1"> {{ playerList.current.throws.throw1 }} </p>
+                    <p *ngIf="playerList.current.throws.throw1 != 'abort'"> {{ playerList.current.throws.throw1 }} </p>
+                    <span *ngIf="playerList.current.throws.throw1 == 'abort'"></span>
                 </div>
                 <div class="throw">
                     <h1>2</h1>
-                    <p *ngIf="playerList.current.throws.throw2"> {{ playerList.current.throws.throw2 }} </p>
+                    <p *ngIf="playerList.current.throws.throw2 != 'abort'"> {{ playerList.current.throws.throw2 }} </p>
+                    <span *ngIf="playerList.current.throws.throw2 == 'abort'"></span>
                 </div>
                 <div class="throw">
                     <h1>3</h1>
-                    <p *ngIf="playerList.current.throws.throw3"> {{ playerList.current.throws.throw3}} </p>
+                    <p *ngIf="playerList.current.throws.throw3 != 'abort'"> {{ playerList.current.throws.throw3}} </p>
+                    <span *ngIf="playerList.current.throws.throw3 == 'abort'"></span>
                 </div>
             </div>
-
-            <div class="bottom">
+    
+            <div class="informations">
+                <span>
+                    <h1>Highscore</h1>
+                    <p> {{ playerList.current.highscore }} </p>
+                </span>
                 <span>
                     <h1>Hint</h1>
                     <p>
@@ -48,36 +60,68 @@
                 </span>
             </div>
         </div>
-
-        <div class="other">
-            <div class="player">
-                <div class="top">
-                    <div class="user">
-                        <h2> {{ playerList.next.name }} </h2>
-                        <p> {{ playerList.next.number }} </p>
+    
+        <div class="list">
+    
+            <ng-container *ngFor="let player of players">
+    
+                <div class="player" [ngClass]="{'player': true, 'current': playerList.current == player}">
+    
+                    <div class="top">
+                        <div class="profile">
+                            <div class="img">
+                                <img [src]="player.profilePicture" class="blur">
+                                <img [src]="player.profilePicture">
+                            </div>
+                            <h2> {{ player.name }} </h2>
+                            <p> {{ player.number }} </p>
+                        </div>
+    
+                        <div class="s-throws">
+                            <div class="throw">
+                                <h1>1</h1>
+                                <p *ngIf="player.throws.throw1 != 'abort'"> {{ player.throws.throw1 }} </p>
+                                <span *ngIf="player.throws.throw1 == 'abort'" class="line">asd</span>
+                            </div>
+                            <div class="throw">
+                                <h1>2</h1>
+                                <p *ngIf="player.throws.throw2 != 'abort'"> {{ player.throws.throw2 }} </p>
+                                <span *ngIf="player.throws.throw2 == 'abort'" class="line"></span>
+                            </div>
+                            <div class="throw">
+                                <h1>3</h1>
+                                <p *ngIf="player.throws.throw3 != 'abort'"> {{ player.throws.throw3 }} </p>
+                                <span *ngIf="player.throws.throw3 == 'abort'" class="line"></span>
+                            </div>
+                        </div>
+    
+                        <div class="score">
+                            <h1> {{  player.score }} </h1>
+                        </div>
                     </div>
-
-                    <h1 class="status">Nächster</h1>
-
-                    <div class="score">
-                        <h1> {{ playerList.next.score }} </h1>
+    
+                    <div class="informations">
+                        <span>
+                            <h1>Highscore</h1>
+                            <p> {{ player.highscore }} </p>
+                        </span>
+                        <span>
+                            <h1>Hint</h1>
+                            <p>
+                                <ng-container *ngIf="!player.throwsHint.hint1"> No Hint </ng-container>
+                                <ng-container *ngIf="player.throwsHint.hint1"> {{ player.throwsHint.hint1 }} </ng-container>
+                                <ng-container *ngIf="player.throwsHint.hint2"> | </ng-container>
+                                <ng-container *ngIf="player.throwsHint.hint2"> {{ player.throwsHint.hint2 }} </ng-container>
+                                <ng-container *ngIf="player.throwsHint.hint3"> | </ng-container>
+                                <ng-container *ngIf="player.throwsHint.hint3"> {{ player.throwsHint.hint3 }} </ng-container>
+                            </p>
+                        </span>
                     </div>
+    
                 </div>
-            </div>
-            <div class="player previous">
-                <div class="top">
-                    <div class="user">
-                        <h2> {{ playerList.previous.name }} </h2>
-                        <p> {{ playerList.previous.number }} </p>
-                    </div>
-
-                    <h1 class="status">Vorheriger</h1>
-
-                    <div class="score">
-                        <h1> {{ playerList.previous.score }} </h1>
-                    </div>
-                </div>
-            </div>
+    
+            </ng-container>
+    
         </div>
     </div>
 
