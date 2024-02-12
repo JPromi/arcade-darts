@@ -165,7 +165,7 @@
             <button (click)="setPoints('18')" [ngClass]="{'active': keyInput == '18'}">18</button>
             <button (click)="setPoints('19')" [ngClass]="{'active': keyInput == '19'}">19</button>
             <button (click)="setPoints('20')" [ngClass]="{'active': keyInput == '20'}">20</button>
-            <button (click)="setPoints('25')" [ngClass]="{'active': keyInput == '25'}">25</button>
+            <button (click)="setPoints('25')" [ngClass]="{'active': keyInput == '25', 'disabled': multiplier == 'T'}" [disabled]="multiplier == 'T'">25</button>
             <button (click)="setPoints('0')" [ngClass]="{'active': keyInput == '0'}">MISS</button>
         </div>
 
