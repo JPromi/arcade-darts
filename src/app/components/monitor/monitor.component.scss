@@ -342,6 +342,79 @@
     }
 }
 
+.winnerscreen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+    padding: 3rem;
+    box-sizing: border-box;
+    justify-content: center;
+
+    .winner {
+        height: 100%;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--gold);
+        box-shadow: 0 0 5rem #f5c518, inset 0 0 2.5rem #f5c51850;
+        border-radius: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        max-height: 800px;
+
+        & > h1 {
+            margin-top: -3rem;
+            width: 100%;
+            color: var(--background-color);
+            -webkit-text-stroke-color: var(--gold);
+            -webkit-text-stroke-width: 1px;
+            text-shadow: 0 0 5rem var(--gold);
+            font-size: 8.5vw;
+            letter-spacing: 2vw;
+            font-weight: 700;
+            height: fit-content;
+            
+        }
+
+        .player {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5vw;
+
+            .img {
+                position: relative;
+                width: 15vw;
+                height: 15vw;
+    
+                img {
+                    border-radius: 50%;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    position: absolute;
+    
+                    &.blur {
+                        filter: blur(1rem);
+                    }
+                }
+            }
+    
+            h1 {
+                font-size: 5vw;
+                font-weight: 700;
+                color: #fff;
+                letter-spacing: 1rem;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1500px){
     .game {
         .list {

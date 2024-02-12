@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="game" *ngIf="loaded">
+<div class="game" *ngIf="loaded && gameIsActive">
     <div class="current">
         <div class="top">
             <div class="player">
@@ -125,4 +125,20 @@
         </ng-container>
 
     </div>
+</div>
+
+<div class="winnerscreen" *ngIf="loaded && !gameIsActive">
+
+    <div class="winner">
+        <h1>Gewinner:</h1>
+        <div class="player">
+            <div class="img">
+                <img [src]="winnerPlayer.profilePicture" class="blur">
+                <img [src]="winnerPlayer.profilePicture">
+            </div>
+            <h1> {{ winnerPlayer.name }} </h1>
+
+        </div>
+    </div>
+
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameInformation, Player } from '../../dtos/play';
 import { MonitorService } from '../../services/monitor.service';
+import { DartsService } from '../../services/darts.service';
 
 @Component({
   selector: 'app-monitor',
@@ -10,7 +11,8 @@ import { MonitorService } from '../../services/monitor.service';
 export class MonitorComponent implements OnInit {
 
   constructor(
-    public monitorService: MonitorService
+    public monitorService: MonitorService,
+    public dartsService: DartsService
   ) { }
 
   clock: string = '00:00';
@@ -21,6 +23,9 @@ export class MonitorComponent implements OnInit {
   gameInformation: GameInformation = new GameInformation();
 
   currentPlayer: Player = new Player();
+  winnerPlayer: Player = new Player();
+
+  gameIsActive: boolean = false;
 
   ngOnInit() {
 
@@ -65,6 +70,7 @@ export class MonitorComponent implements OnInit {
 
   getPlayerInformation() {
     this.monitorService.getPlayers().subscribe(players => {
+      this.checkGameStatus();
 
       if(this.players != players) {
         players.forEach(
@@ -76,7 +82,7 @@ export class MonitorComponent implements OnInit {
   
           }
         );
-  
+        
         this.players = players;
 
       }
@@ -89,6 +95,28 @@ export class MonitorComponent implements OnInit {
     } else {
       document.documentElement.requestFullscreen();
     }
+  }
+
+  checkGameStatus() {
+    this.dartsService.isCurrentGame().subscribe(
+      (response: boolean) => {
+        this.gameIsActive = response;
+
+        if(!response) {
+          this.getWinner();
+        }
+      }
+    );
+  }
+
+  getWinner() {
+    this.players.forEach(player => {
+      if(player.score === 0) {
+        if(this.winnerPlayer != player) {
+          this.winnerPlayer = player;
+        }
+      }
+    });
   }
 
 }
