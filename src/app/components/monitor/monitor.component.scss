@@ -345,71 +345,124 @@
 .winnerscreen {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    scrollbar-width: none;
-    padding: 3rem;
-    box-sizing: border-box;
-    justify-content: center;
 
-    .winner {
-        height: 100%;
-        padding: 3rem;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid var(--gold);
-        box-shadow: 0 0 5rem #f5c518, inset 0 0 2.5rem #f5c51850;
-        border-radius: 1rem;
-        align-items: center;
-        justify-content: space-between;
+    .players {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 4fr 1fr 1fr;
+        padding: 1rem;
+        box-sizing: border-box;
         gap: 1rem;
-        max-height: 800px;
-
-        & > h1 {
-            margin-top: -3rem;
-            width: 100%;
-            color: var(--background-color);
-            -webkit-text-stroke-color: var(--gold);
-            -webkit-text-stroke-width: 1px;
-            text-shadow: 0 0 5rem var(--gold);
-            font-size: 8.5vw;
-            letter-spacing: 2vw;
-            font-weight: 700;
-            height: fit-content;
-            
-        }
+        width: 100%;
+        min-height: 50rem;
 
         .player {
-            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            border: 1px solid #ffffffAA;
+            box-shadow: 0 0 1rem #ffffff75, inset 0 0 .25rem #ffffff20;
+            color: #fff;
+            padding: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 5vw;
+            gap: 2rem;
+            box-sizing: border-box;
+            opacity: .75;
+            backdrop-filter: blur(5rem);
 
-            .img {
-                position: relative;
-                width: 15vw;
-                height: 15vw;
+            .text {
+                display: flex;
+                flex-direction: row;
+                gap: .5rem;
+
+                h1 {
+                    font-size: 3rem;
+                    font-weight: 600;
+                }
+
+                p {
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: #ffffff50;
+                }
+            }
+
+            &.winner {
+                opacity: 1;
+                grid-area: 1 / 1 / 2 / 4;
+                border: 3px solid #ffffffAA;
+                box-shadow: 0 0 5rem #fff129, inset 0 0 1rem #fff12950;
+                width: 100%;
+                margin: 0 auto;
+                justify-content: center;
+
+                .img {
+                    display: flex;
+                    position: relative;
+                    max-width: 25vw;
+                    max-height: 25vw;
+                    width: 25rem;
+                    height: 25rem;
+                    min-width: 10rem;
+                    min-height: 10rem;
+                    justify-content: flex-end;
+                    align-items: flex-start;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        position: absolute;
+                    }
+
+                    .crown {
+                        transform: translate(-25%, -50%) rotate(20deg);
+                        max-width: 12vw;
+                        max-height: 12vw;
+                        width: 10rem;
+                        height: 10rem;
+                        min-width: 5rem;
+                        min-height: 5rem;
+                        object-fit: contain;
+                        position: absolute;
+                        border-radius: 0;
+                    }
+                }
+
+                .text {
     
-                img {
-                    border-radius: 50%;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    position: absolute;
+                    h1 {
+                        font-size: 8rem;
+                        font-weight: 600;
+                    }
     
-                    &.blur {
-                        filter: blur(1rem);
+                    p {
+                        font-size: 3rem;
+                        font-weight: 600;
+                        color: #ffffff50;
                     }
                 }
             }
-    
-            h1 {
-                font-size: 5vw;
-                font-weight: 700;
-                color: #fff;
-                letter-spacing: 1rem;
+
+            &:not(.winner) {
+                .img {
+                    display: flex;
+                    position: relative;
+                    width: 5rem;
+                    height: 5rem;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        position: absolute;
+                    }
+                }
             }
         }
     }
@@ -419,6 +472,21 @@
     .game {
         .list {
             grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .winnerscreen {
+        .players {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 4fr 1fr 1fr;
+
+            .player {
+                &.winner {
+                    grid-area: 1 / 1 / 2 / 3;
+                }
+            }
         }
     }
 }
