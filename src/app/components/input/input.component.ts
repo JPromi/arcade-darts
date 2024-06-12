@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { InputService } from '../../services/input.service';
 import { GameInformation, Player } from '../../dtos/play';
 import { MonitorService } from '../../services/monitor.service';
+import { timeInterval } from 'rxjs';
 
 @Component({
   selector: 'app-input',
@@ -24,6 +25,7 @@ export class InputComponent implements OnInit {
   keyInput: string = '';
   inputInterval: any;
   gameInformation: GameInformation = new GameInformation();
+  soundPlaying: boolean = false;
 
   players: Player[] = [];
   playerList = {
@@ -44,10 +46,13 @@ export class InputComponent implements OnInit {
     }, 15000);
   }
 
-  checkIfCurrentGame() {
+  checkIfCurrentGame(inGame: boolean = false) {
     this.dartsService.isCurrentGame().subscribe(
       (isCurrentGame: boolean) => {
         if(!isCurrentGame) {
+          if(inGame) {
+            this.playWinningSound();
+          }
           this.router.navigate(['/']);
         }
       }
@@ -123,7 +128,7 @@ export class InputComponent implements OnInit {
         if(this.players != players) {
           this.players = players;
           this.setPlayerList();
-          this.checkIfCurrentGame();
+          this.checkIfCurrentGame(true);
         }
       }
     );
@@ -152,6 +157,19 @@ export class InputComponent implements OnInit {
       document.exitFullscreen();
     } else {
       document.documentElement.requestFullscreen();
+    }
+  }
+
+  playWinningSound() {
+    if(!this.soundPlaying) {
+      this.soundPlaying = true;
+      const audio = new Audio();
+      audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
+      audio.load();
+      audio.play();
+      audio.onended = () => {
+        this.soundPlaying = false;
+      }
     }
   }
 
