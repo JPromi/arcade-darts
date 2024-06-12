@@ -118,7 +118,7 @@ export class MonitorComponent implements OnInit {
 
   playWinningSound() {
     const audio = new Audio();
-    audio.src = './assets/sounds/WIN-chase-the-sun.mp3';
+    audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
     audio.load();
     audio.play();
   }
