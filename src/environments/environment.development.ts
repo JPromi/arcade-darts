@@ -1,5 +1,6 @@
 export const environment = {
     domain: {
-        api: 'https://arcade.jpromi.com',
+        api: 'https://arcade.vamed.jpromi.com',
+        // api: '',
     }
 };
