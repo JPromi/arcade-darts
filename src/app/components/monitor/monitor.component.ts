@@ -43,11 +43,6 @@ export class MonitorComponent implements OnInit {
     setInterval(() => {
       this.getPlayerInformation();
     }, 5000);
-
-
-    // TMP
-    // this.getHint(this.players[this.counter]);
-    // this.currentPlayer = this.players[this.counter];
   }
 
   setClock() {
@@ -100,11 +95,13 @@ export class MonitorComponent implements OnInit {
   checkGameStatus() {
     this.dartsService.isCurrentGame().subscribe(
       (response: boolean) => {
-        this.gameIsActive = response;
-
         if(!response) {
           this.getWinner();
+          if(this.gameIsActive != response) {
+            this.playWinningSound();
+          }
         }
+        this.gameIsActive = response;
       }
     );
   }
@@ -117,6 +114,13 @@ export class MonitorComponent implements OnInit {
         }
       }
     });
+  }
+
+  playWinningSound() {
+    const audio = new Audio();
+    audio.src = './assets/sounds/WIN-chase-the-sun.mp3';
+    audio.load();
+    audio.play();
   }
 
 }
