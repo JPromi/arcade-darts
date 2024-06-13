@@ -17,6 +17,7 @@ export class MonitorComponent implements OnInit {
 
   clock: string = '00:00';
   loaded: boolean = false;
+  soundPlaying: boolean = false;
 
   players: Player[] = [];
 
@@ -117,10 +118,15 @@ export class MonitorComponent implements OnInit {
   }
 
   playWinningSound() {
-    const audio = new Audio();
-    audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
-    audio.load();
-    audio.play();
+    if(!this.soundPlaying) {
+      const audio = new Audio();
+      audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
+      audio.load();
+      audio.play();
+      audio.onended = () => {
+        this.soundPlaying = false;
+      }
+    }
   }
 
 }

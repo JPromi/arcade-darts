@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DartsService } from '../../services/darts.service';
 import { Router } from '@angular/router';
 import { InputService } from '../../services/input.service';
@@ -11,7 +11,7 @@ import { timeInterval } from 'rxjs';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnDestroy {
 
   constructor(
     public dartsService: DartsService,
@@ -26,6 +26,7 @@ export class InputComponent implements OnInit {
   inputInterval: any;
   gameInformation: GameInformation = new GameInformation();
   soundPlaying: boolean = false;
+  playerInterval: any;
 
   players: Player[] = [];
   playerList = {
@@ -41,9 +42,13 @@ export class InputComponent implements OnInit {
     this.getGameSettings();
     this.getPlayers();
 
-    setInterval(() => {
+    this.playerInterval = setInterval(() => {
       this.getPlayers();
     }, 15000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.playerInterval);
   }
 
   checkIfCurrentGame(inGame: boolean = false) {
