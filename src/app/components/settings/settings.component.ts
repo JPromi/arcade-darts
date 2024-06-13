@@ -3,6 +3,9 @@ import { SettingsService } from '../../services/settings.service';
 import { GameSettings, UserList } from '../../dtos/settings';
 import { DartsService } from '../../services/darts.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { LocalGameService } from '../../services/local/local-game.service';
+import { LocalPlayerService } from '../../services/local/local-player.service';
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +16,9 @@ export class SettingsComponent implements OnInit {
   constructor(
     public settingsService: SettingsService,
     public dartsService: DartsService,
-    public router: Router
+    public router: Router,
+    private localGameService: LocalGameService,
+    private localPlayerService: LocalPlayerService
   ) { }
 
   userList: UserList[] = [];
@@ -38,6 +43,9 @@ export class SettingsComponent implements OnInit {
     this.settingsService.getAllUsers().subscribe(
       (data) => {
         this.userList = data;
+        // data.forEach(user => {
+        //   this.localPlayerService.addPlayer(user);
+        // });
       },
       (err) => {
         console.log(err);
@@ -74,16 +82,22 @@ export class SettingsComponent implements OnInit {
 
   newGame() {
     if(this.gameSettings.players.length > 1 && this.gameSettings.players.length < 7) {
-      this.settingsService.newGame(this.gameSettings).subscribe(
-        (data) => {
-          if(data) {
-            this.router.navigate(['/game']);
+      if(!environment.local.play) {
+        this.settingsService.newGame(this.gameSettings).subscribe(
+          (data) => {
+            if(data) {
+              this.router.navigate(['/game']);
+            }
+          },
+          (err) => {
+            console.log(err);
           }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        );
+      } else {
+        this.localGameService.startGame(this.gameSettings).then(() => {
+          this.router.navigate(['/game']);
+        });
+      }
     }
   }
 

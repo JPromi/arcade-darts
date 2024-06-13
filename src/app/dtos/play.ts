@@ -30,6 +30,7 @@ export class GameInformation {
         public mode: string = "",
         public checkout: string = "",
         public player: Player[] = [],
+        public throws: Throws[] = [],
     ) {}
 }
 
