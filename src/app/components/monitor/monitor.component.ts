@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GameInformation, Player } from '../../dtos/play';
 import { MonitorService } from '../../services/monitor.service';
 import { DartsService } from '../../services/darts.service';
+import { LocalGameService } from '../../services/local/local-game.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-monitor',
@@ -12,7 +14,8 @@ export class MonitorComponent implements OnInit {
 
   constructor(
     public monitorService: MonitorService,
-    public dartsService: DartsService
+    public dartsService: DartsService,
+    public localGameService: LocalGameService
   ) { }
 
   clock: string = '00:00';
@@ -29,21 +32,31 @@ export class MonitorComponent implements OnInit {
   gameIsActive: boolean = false;
 
   ngOnInit() {
-
-    this.getGameInformation();
-
+  
     //clock
     this.setClock();
     setInterval(() => {
       this.setClock();
     }, 1000);
 
-    // load players
-    this.getPlayerInformation();
+    if(environment.offline) {
+      // load players
+      this.lGetPlayerInformation();
 
-    setInterval(() => {
+      setInterval(() => {
+        this.lGetGameInformation();
+        this.lGetPlayerInformation();
+      }, 1000);
+    } else {
+      this.getGameInformation();
+  
+      // load players
       this.getPlayerInformation();
-    }, 5000);
+  
+      setInterval(() => {
+        this.getPlayerInformation();
+      }, 5000);
+    }
   }
 
   setClock() {
@@ -127,6 +140,34 @@ export class MonitorComponent implements OnInit {
         this.soundPlaying = false;
       }
     }
+  }
+
+  // local
+  lGetGameInformation() {
+    this.localGameService.currentGame().then(gameInformation => {
+      if(gameInformation) {
+        this.gameInformation = this.localGameService.gameAsGame(gameInformation);
+        this.loaded = true;
+        this.gameIsActive = !gameInformation.ended;
+      }
+    });
+  }
+
+  lGetPlayerInformation() {
+    this.localGameService.currentGame().then(gameInformation => {
+      if(gameInformation) {
+        this.players = this.localGameService.gameAsGame(gameInformation).player;
+        this.players.forEach(
+          player => {
+  
+            if(player.current) {
+              this.currentPlayer = player;
+            }
+  
+          }
+        );
+      }
+    });
   }
 
 }
