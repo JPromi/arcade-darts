@@ -43,7 +43,7 @@ export class LocalGameService {
       (game) => {
         if (game) {
           game.ended = true;
-          return this.db.update('game', game);
+          return this.db.update('game', game).toPromise();
         } else {
           return Promise.reject('No game found');
         }
