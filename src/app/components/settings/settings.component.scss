@@ -177,6 +177,10 @@
                     &.active {
                         background-color: #00a2ffff;
                     }
+
+                    &.delete {
+                        background-color: #ff0000ff;
+                    }
                 }
             }
         }

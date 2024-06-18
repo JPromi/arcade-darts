@@ -5,6 +5,8 @@ import { InputService } from '../../services/input.service';
 import { GameInformation, Player } from '../../dtos/play';
 import { MonitorService } from '../../services/monitor.service';
 import { timeInterval } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { LocalGameService } from '../../services/local/local-game.service';
 
 @Component({
   selector: 'app-input',
@@ -17,7 +19,8 @@ export class InputComponent implements OnInit, OnDestroy {
     public dartsService: DartsService,
     public router: Router,
     public inputService: InputService,
-    public monitorService: MonitorService
+    public monitorService: MonitorService,
+    private localGameService: LocalGameService
   ) { }
 
   inputType: string = 'numbers';
@@ -37,14 +40,17 @@ export class InputComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkIfCurrentGame();
-
-    //load list
-    this.getGameSettings();
-    this.getPlayers();
-
-    this.playerInterval = setInterval(() => {
+    if(environment.offline) {
+      this.lGetGameSettings();
+    } else {
+      //load list
+      this.getGameSettings();
       this.getPlayers();
-    }, 15000);
+  
+      this.playerInterval = setInterval(() => {
+        this.getPlayers();
+      }, 15000);
+    }
   }
 
   ngOnDestroy() {
@@ -52,16 +58,26 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   checkIfCurrentGame(inGame: boolean = false) {
-    this.dartsService.isCurrentGame().subscribe(
-      (isCurrentGame: boolean) => {
-        if(!isCurrentGame) {
-          if(inGame) {
-            this.playWinningSound();
+    if(environment.offline) {
+      this.localGameService.currentGame().then(
+        (game) => {
+          if(game && game.ended) {
+            this.router.navigate(['/']);
           }
-          this.router.navigate(['/']);
         }
-      }
-    );
+      );
+    } else {
+      this.dartsService.isCurrentGame().subscribe(
+        (isCurrentGame: boolean) => {
+          if(!isCurrentGame) {
+            if(inGame) {
+              this.playWinningSound();
+            }
+            this.router.navigate(['/']);
+          }
+        }
+      );
+    }
   }
 
   getGameSettings() {
@@ -73,22 +89,45 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   setPoints(points: string) {
-    this.inputService.addPoint(this.multiplier + points).subscribe(
-      (response: any) => {
-        this.getPlayers();
-      }
-    );
+    if(environment.offline) {
+      this.localGameService.addPoint(this.playerList.current.playerId, this.multiplier + points).then(
+        (response: any) => {
+          this.gameInformation = this.localGameService.gameAsGame(response);
+          this.players = this.gameInformation.player;
+          this.setPlayerList();
+          if(response.ended) {
+            this.router.navigate(['/']);
+          }
+        }
+      );
+    } else {
+      this.inputService.addPoint(this.multiplier + points).subscribe(
+        (response: any) => {
+          this.getPlayers();
+        }
+      );
+    }
 
     //reset multiplier
     this.multiplier = '';
   }
 
   undo() {
-    this.inputService.undoPoint().subscribe(
-      (response: any) => {
-        this.getPlayers();
-      }
-    );
+    if(environment.offline) {
+      this.localGameService.undoThrow().then(
+        (response: any) => {
+          this.gameInformation = this.localGameService.gameAsGame(response);
+          this.players = this.gameInformation.player;
+          this.setPlayerList();
+        }
+      );
+    } else {
+      this.inputService.undoPoint().subscribe(
+        (response: any) => {
+          this.getPlayers();
+        }
+      );
+    }
   }
 
   // key
@@ -128,15 +167,20 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   getPlayers() {
-    this.monitorService.getPlayers().subscribe(
-      (players: Player[]) => {
-        if(this.players != players) {
-          this.players = players;
-          this.setPlayerList();
-          this.checkIfCurrentGame(true);
+    if(environment.offline) {
+      this.lGetGameSettings();
+    } else {
+      this.monitorService.getPlayers().subscribe(
+        (players: Player[]) => {
+          if(this.players != players) {
+            this.players = players;
+            this.setPlayerList();
+            this.checkIfCurrentGame(true);
+          }
         }
-      }
-    );
+      );
+    }
+    
   }
 
   setPlayerList() {
@@ -150,11 +194,19 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   cancleGame() {
-    this.inputService.cancleGame().subscribe(
-      (response: any) => {
-        this.router.navigate(['/']);
-      }
-    );
+    if(environment.offline) {
+      this.localGameService.endGame().then(
+        (response: any) => {
+          this.router.navigate(['/']);
+        }
+      );
+    } else {
+      this.inputService.cancleGame().subscribe(
+        (response: any) => {
+          this.router.navigate(['/']);
+        }
+      );
+    }
   }
 
   fullscreen() {
@@ -176,6 +228,19 @@ export class InputComponent implements OnInit, OnDestroy {
         this.soundPlaying = false;
       }
     }
+  }
+
+  // local
+  lGetGameSettings() {
+    this.localGameService.currentGame().then(
+      (game) => {
+        if(game) {
+          this.gameInformation = this.localGameService.gameAsGame(game);
+          this.players = this.gameInformation.player;
+          this.setPlayerList();
+        }
+      }
+    );
   }
 
 }

@@ -36,12 +36,25 @@
                 </label>
             </div>
         </div>
+
+        <div class="setting" *ngIf="env.offline">
+            <h3>Spieler Hinzufügen</h3>
+            <div class="input">
+                <input type="text" [(ngModel)]="newPlayerInput">
+                <button (click)="lAddUser()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
     
         <div class="setting">
             <h3>Spieler Auswahl</h3>
             <div class="btns">
                 <button (click)="randomizePlayerList()">
                     <mat-icon>refresh</mat-icon>
+                </button>
+                <button (click)="deletePlayer = !deletePlayer" *ngIf="env.offline">
+                    <mat-icon>delete</mat-icon>
                 </button>
             </div>
             <p class="info">Es müssen Mindestens 2 und Maximal 6 Spieler Ausgewählt werden</p>
@@ -52,7 +65,7 @@
                         <input type="checkbox" [name]="'playerSelect' + user.userId.toString()">
                         <p> {{ user.username }} </p>
                     </label> -->
-                    <button [ngClass]="{'active': gameSettings.players.includes(user.userId)}" (click)="toggleUser(user.userId)">
+                    <button [ngClass]="{'active': gameSettings.players.includes(user.userId), 'delete': deletePlayer}" (click)="toggleUser(user.userId)">
                         <p class="name"> {{ user.username }} </p>
                         <p class="number"> {{ getUserNumber(user.userId) }} </p>
                     </button>

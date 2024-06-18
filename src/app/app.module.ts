@@ -10,6 +10,35 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FormsModule } from '@angular/forms';
+import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+
+// database
+const dbConfig: DBConfig = {
+  name: 'darts',
+  version: 1,
+  objectStoresMeta: [
+    {
+      store: 'players',
+      storeConfig: { keyPath: 'userId', autoIncrement: true },
+      storeSchema: [
+        { name: 'username', keypath: 'username', options: { unique: true } }
+      ]
+    },
+    {
+      store: 'game',
+      storeConfig: { keyPath: 'gameId', autoIncrement: true },
+      storeSchema: [
+        { name: 'gameId', keypath: 'gameId', options: { unique: true } },
+        { name: 'players', keypath: 'players', options: { unique: false } },
+        { name: 'mode', keypath: 'mode', options: { unique: false } },
+        { name: 'checkout', keypath: 'checkout', options: { unique: false } },
+        { name: 'ended', keypath: 'ended', options: { unique: false } },
+        { name: 'date', keypath: 'date', options: { unique: false } },
+        { name: 'throws', keypath: 'throws', options: { unique: false } }
+      ]
+    }
+  ]
+};
 
 @NgModule({
   declarations: [
@@ -23,7 +52,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    NgxIndexedDBModule.forRoot(dbConfig),
   ],
   providers: [
     provideAnimationsAsync('noop')
