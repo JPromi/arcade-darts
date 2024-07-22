@@ -1,6 +1,6 @@
 export const environment = {
     domain: {
-        api: '',
+        api: 'https://arcade.v-health.info',
     },
     offline: false,
 };
