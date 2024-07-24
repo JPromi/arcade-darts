@@ -27,7 +27,6 @@ export class MonitorComponent implements OnInit {
   gameInformation: GameInformation = new GameInformation();
 
   currentPlayer: Player = new Player();
-  winnerPlayer: Player = new Player();
 
   gameIsActive: boolean = false;
 
@@ -110,7 +109,6 @@ export class MonitorComponent implements OnInit {
     this.dartsService.isCurrentGame().subscribe(
       (response: boolean) => {
         if(!response) {
-          this.getWinner();
           if(this.gameIsActive != response) {
             this.playWinningSound();
           }
@@ -118,16 +116,6 @@ export class MonitorComponent implements OnInit {
         this.gameIsActive = response;
       }
     );
-  }
-
-  getWinner() {
-    this.players.forEach(player => {
-      if(player.score === 0) {
-        if(this.winnerPlayer != player) {
-          this.winnerPlayer = player;
-        }
-      }
-    });
   }
 
   playWinningSound() {

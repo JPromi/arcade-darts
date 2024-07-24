@@ -11,6 +11,7 @@ export class Player {
         public throws: Throws = new Throws(),
         public throwsHint: Hint = new Hint(),
         public current: boolean = false,
+        public winner: boolean = false,
     ) {}
 }
 

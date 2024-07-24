@@ -138,19 +138,21 @@
 <div class="winnerscreen" *ngIf="!gameIsActive">
 
     <div class="players">
-        <div class="player winner">
-            <div class="img">
-                <img [src]="winnerPlayer.profilePicture" class="blur">
-                <img [src]="winnerPlayer.profilePicture">
-                <img src="assets/crown.svg" class="crown">
-            </div>
-            <div class="text">
-                <h1> {{ winnerPlayer.name }} </h1>
-                <p> {{ winnerPlayer.number }} </p>
-            </div>
-        </div>
         <ng-container *ngFor="let player of players">
-            <div class="player" *ngIf="player.playerId != winnerPlayer.playerId">
+            <div class="player winner" *ngIf="player.winner">
+                <div class="img">
+                    <img [src]="player.profilePicture" class="blur">
+                    <img [src]="player.profilePicture">
+                    <img src="assets/crown.svg" class="crown">
+                </div>
+                <div class="text">
+                    <h1> {{ player.name }} </h1>
+                    <p> {{ player.number }} </p>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngFor="let player of players">
+            <div class="player" *ngIf="!player.winner">
                 <div class="img">
                     <img [src]="player.profilePicture" class="blur">
                     <img [src]="player.profilePicture">
