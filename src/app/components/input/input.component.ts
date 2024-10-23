@@ -22,6 +22,8 @@ export class InputComponent implements OnInit, OnDestroy {
     public monitorService: MonitorService,
     private localGameService: LocalGameService
   ) { }
+  
+  clock: string = '00:00';
 
   inputType: string = 'numbers';
   multiplier: string = '';
@@ -55,10 +57,20 @@ export class InputComponent implements OnInit, OnDestroy {
         this.getPlayers();
       }, 15000);
     }
+
+    this.setClock();
+    setInterval(() => {
+      this.setClock();
+    }, 1000);
   }
 
   ngOnDestroy() {
     clearInterval(this.playerInterval);
+  }
+
+  setClock() {
+    const date = new Date();
+    this.clock = date.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
   }
 
   checkIfCurrentGame(inGame: boolean = false) {

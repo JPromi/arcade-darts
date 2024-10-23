@@ -25,6 +25,12 @@
         flex-direction: row;
         gap: 1rem;
         align-items: center;
+
+        p.clock {
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: .15rem;
+        }
     }
 }
 
