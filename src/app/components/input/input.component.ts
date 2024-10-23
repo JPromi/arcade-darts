@@ -38,6 +38,10 @@ export class InputComponent implements OnInit, OnDestroy {
     previous: new Player()
   }
 
+  popup = {
+    show: false
+  }
+
   ngOnInit() {
     this.checkIfCurrentGame();
     if(environment.offline) {
@@ -193,7 +197,10 @@ export class InputComponent implements OnInit, OnDestroy {
     });
   }
 
-  cancleGame() {
+  cancleGame(decision: boolean = false) {
+    if(!decision) {
+      return;
+    }
     if(environment.offline) {
       this.localGameService.endGame().then(
         (response: any) => {

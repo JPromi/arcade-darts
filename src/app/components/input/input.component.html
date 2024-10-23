@@ -129,7 +129,7 @@
         <div class="top">
             <div class="settings">
                 <button (click)="undo()">Undo</button>
-                <button (click)="cancleGame()">Beenden</button>
+                <button (click)="popup.show = true">Beenden</button>
             </div>
 
             <div>
@@ -347,3 +347,11 @@
     </div>
 
 </div>
+
+<asset-popup
+    [title]="'Spiel beenden'"
+    [message]="'Willst du wirklich das Spiel beenden?'"
+    [type]="'warning'"
+    [(show)]="popup.show"
+    (decision)="cancleGame($event)">
+</asset-popup>

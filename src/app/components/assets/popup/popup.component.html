@@ -1,0 +1,20 @@
+<div class="container" *ngIf="show">
+
+    <span class="void" (click)="closePopup(false)"></span>
+
+    <div class="popup">
+        <div class="text">
+            <h2>{{ title }}</h2>
+            <p>{{ message }}</p>
+        </div>
+    
+        <div class="btn">
+            <button (click)="closePopup(false)" *ngIf="type == 'ok'">Schließen</button>
+            <button (click)="closePopup(false)" *ngIf="type == 'warning'">Abbrechen</button>
+            <button (click)="closePopup(true)" *ngIf="type == 'info' || type == 'error'" class="primary">Ok</button>
+            <button (click)="closePopup(true)" *ngIf="type == 'ok'" class="primary">Bestätigen</button>
+            <button (click)="closePopup(true)" *ngIf="type == 'warning'" class="primary error">Beenden</button>
+        </div>
+    </div>
+
+</div>

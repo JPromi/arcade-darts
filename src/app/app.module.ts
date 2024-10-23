@@ -12,6 +12,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FormsModule } from '@angular/forms';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { PopupComponent } from './components/assets/popup/popup.component';
 
 // database
 const dbConfig: DBConfig = {
@@ -46,7 +47,8 @@ const dbConfig: DBConfig = {
     AppComponent,
     MonitorComponent,
     SettingsComponent,
-    InputComponent
+    InputComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
