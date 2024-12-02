@@ -105,6 +105,12 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   setPoints(points: string) {
+    // play input audio
+    const audio = new Audio();
+    audio.src = 'assets/sounds/input.mp3';
+    audio.load();
+    audio.play();
+
     if(environment.offline) {
       this.localGameService.addPoint(this.playerList.current.playerId, this.multiplier + points).then(
         (response: any) => {

@@ -61,6 +61,10 @@
                         <ng-container *ngIf="playerList.current.throwsHint.hint3"> {{ playerList.current.throwsHint.hint3 }} </ng-container>
                     </p>
                 </span>
+                <span>
+                    <h1>Average</h1>
+                    <p>{{ playerList.current.average }}</p>
+                </span>
             </div>
         </div>
     
@@ -118,6 +122,10 @@
                                 <ng-container *ngIf="player.throwsHint.hint3"> | </ng-container>
                                 <ng-container *ngIf="player.throwsHint.hint3"> {{ player.throwsHint.hint3 }} </ng-container>
                             </p>
+                        </span>
+                        <span>
+                            <h1>Average</h1>
+                            <p>{{ playerList.current.average }}</p>
                         </span>
                     </div>
     
