@@ -140,26 +140,50 @@
     <div class="players">
         <ng-container *ngFor="let player of players">
             <div class="player winner" *ngIf="player.winner">
-                <div class="img">
-                    <img [src]="player.profilePicture" class="blur">
-                    <img [src]="player.profilePicture">
-                    <img src="assets/crown.svg" class="crown">
+                <div class="top">
+                    <div class="img">
+                        <img [src]="player.profilePicture" class="blur">
+                        <img [src]="player.profilePicture">
+                        <img src="assets/crown.svg" class="crown">
+                    </div>
+                    <div class="text">
+                        <h1> {{ player.name }} </h1>
+                        <p> {{ player.number }} </p>
+                    </div>
                 </div>
-                <div class="text">
-                    <h1> {{ player.name }} </h1>
-                    <p> {{ player.number }} </p>
+                <div class="informations">
+                    <span>
+                        <h1>Highscore</h1>
+                        <p> {{ player.highscore }} </p>
+                    </span>
+                    <span>
+                        <h1>Average</h1>
+                        <p> {{ player.average }} </p>
+                    </span>
                 </div>
             </div>
         </ng-container>
         <ng-container *ngFor="let player of players">
             <div class="player" *ngIf="!player.winner">
-                <div class="img">
-                    <img [src]="player.profilePicture" class="blur">
-                    <img [src]="player.profilePicture">
+                <div class="top">
+                    <div class="img">
+                        <img [src]="player.profilePicture" class="blur">
+                        <img [src]="player.profilePicture">
+                    </div>
+                    <div class="text">
+                        <h1> {{ player.name }} </h1>
+                        <p> {{ player.number }} </p>
+                    </div>
                 </div>
-                <div class="text">
-                    <h1> {{ player.name }} </h1>
-                    <p> {{ player.number }} </p>
+                <div class="informations">
+                    <span>
+                        <h1>Highscore</h1>
+                        <p> {{ player.highscore }} </p>
+                    </span>
+                    <span>
+                        <h1>Average</h1>
+                        <p> {{ player.average }} </p>
+                    </span>
                 </div>
             </div>
         </ng-container>
