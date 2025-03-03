@@ -31,6 +31,7 @@ export class InputComponent implements OnInit, OnDestroy {
   inputInterval: any;
   gameInformation: GameInformation = new GameInformation();
   soundPlaying: boolean = false;
+  soundError: boolean = false;
   playerInterval: any;
 
   players: Player[] = [];
@@ -41,6 +42,10 @@ export class InputComponent implements OnInit, OnDestroy {
   }
 
   popup = {
+    show: false
+  }
+
+  popupEnd = {
     show: false
   }
 
@@ -89,7 +94,8 @@ export class InputComponent implements OnInit, OnDestroy {
             if(inGame) {
               this.playWinningSound();
             }
-            this.router.navigate(['/']);
+            this.popupEnd.show = true;
+            // this.router.navigate(['/']);
           }
         }
       );
@@ -244,13 +250,18 @@ export class InputComponent implements OnInit, OnDestroy {
 
   playWinningSound() {
     if(!this.soundPlaying) {
-      this.soundPlaying = true;
-      const audio = new Audio();
-      audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
-      audio.load();
-      audio.play();
-      audio.onended = () => {
-        this.soundPlaying = false;
+      try {
+        this.soundPlaying = true;
+        const audio = new Audio();
+        audio.src = 'assets/sounds/WIN-chase-the-sun.mp3';
+        audio.load();
+        audio.play();
+        audio.onended = () => {
+          this.soundPlaying = false;
+        }
+      } catch (error) {
+        console.error(error);
+        this.soundError = true;
       }
     }
   }
@@ -266,6 +277,14 @@ export class InputComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  popupFinishDecision() {
+    this.popupEnd.show = false;
+    if(this.soundError) {
+      this.playWinningSound();
+    }
+    this.router.navigate(['/']);
   }
 
 }

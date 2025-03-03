@@ -366,3 +366,10 @@
     [(show)]="popup.show"
     (decision)="cancleGame($event)">
 </asset-popup>
+
+<asset-popup
+    [title]="'Spiel beendet'"
+    [message]="'Das Spiel wurde beendet.'"
+    [type]="'info'"
+    [(show)]="popupEnd.show"
+    (decision)="popupFinishDecision()"/>
